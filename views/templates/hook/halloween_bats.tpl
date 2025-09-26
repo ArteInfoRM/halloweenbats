@@ -10,6 +10,7 @@
 *  @license   One Paid Licence By WebSite Using This Module. No Rent. No Sell. No Share.
 *
 *}
+
 {if $hw_jquery == 1}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {/if}
