@@ -12,3 +12,8 @@ PrestaShop 1.7.0 → 9.0
 Adds animated Halloween bats flying across your shop pages.
 Easy to install and remove, no template overrides required.
 Works on desktop and mobile.
+
+## License
+
+This project is released under the MIT License.  
+See the [LICENSE](LICENSE) file for details.
