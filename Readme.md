@@ -1,4 +1,5 @@
 # 🎃 Release Notes – halloweenbats v1.0.2
+![Built for PrestaShop](https://img.shields.io/badge/Built%20for-PrestaShop-DF0067?logo=prestashop&logoColor=white)  
 Description
 
 For Halloween, add a fun swarm of bats flying across your PrestaShop store pages.
