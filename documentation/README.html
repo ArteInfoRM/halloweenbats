@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>halloweenbats - README</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>Art Halloween Bats</h1>
+<p>Art Halloween Bats (<code>halloweenbats</code>) by Tecnoacquisti.com® adds animated bats to PrestaShop storefront pages. The source currently identifies itself as version 1.0.3.</p>
+<h2>Compatibility</h2>
+<p>The existing documented compatibility is PrestaShop 1.7.0 through 9.0. The PHP module metadata separately declares a minimum of 1.6 and a maximum equal to the installed PrestaShop version. These declarations have not been changed or reconciled during the documentation review. No compatibility tests were performed in this review. Use a PHP version supported by your installed PrestaShop release; a separate module PHP minimum is not declared.</p>
+<h2>Installation and configuration</h2>
+<p>Install the module through the PrestaShop Module Manager and open Configure. The module registers <code>displayHeader</code>; it does not install overrides or custom database tables.</p>
+<ul>
+<li><strong>Load jQUERY:</strong> disabled by default. When enabled, the browser loads jQuery 3.6.0 from Google Hosted Libraries. Leave it disabled when the theme already supplies a compatible jQuery instance. Verify script ordering and theme compatibility in a staging shop.</li>
+<li><strong>Bat amount:</strong> default 5. Keep the number low; each bat creates two animation timers and consumes browser resources.</li>
+<li><strong>Speed:</strong> default 20. Higher values increase movement speed.</li>
+</ul>
+<p>Configuration is stored in <code>HALLOWEEN_JQUERY</code>, <code>HALLOWEEN_AMOUNT</code>, and <code>HALLOWEEN_SPEED</code> through PrestaShop Configuration. Check the selected shop context in multistore installations. Disabling the module stops its storefront hook; uninstalling deletes these configuration keys.</p>
+<h2>Data and external requests</h2>
+<p>The module does not implement customer tracking, customer records, custom logs, or server-side API calls. When the optional Google CDN setting is enabled, visitors&#039; browsers contact Google to download jQuery and transmit normal HTTP connection metadata. JavaScript, CSS, and bat images are otherwise served by the shop. Administrative credits contain links to the vendor website.</p>
+<h2>Updates and recovery</h2>
+<p>Back up shop files and the database before installing an update, and test it on a staging copy first. Obtain a compatible package through the original module delivery channel. If animation causes display or performance problems, disable the module from Module Manager. A source-directory review is not an installation or upgrade test of a release ZIP.</p>
+<h2>Security and notices</h2>
+<p>Report suspected vulnerabilities privately as described in <a href="SECURITY.md">SECURITY.md</a>. See <a href="THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES.md</a> for bundled and external dependencies and <a href="CRA.md">CRA.md</a> for the scope of the readiness documentation.</p>
+<p>The module-owned code is distributed under the <a href="LICENSE">MIT License</a>, confirmed by the owner on 2026-10-05. Third-party MIT and AFL-3.0 components retain their own licenses and attributions; see <a href="THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES.md</a>.</p>
+<p>Support: <a href="mailto:helpdesk@tecnoacquisti.com">helpdesk@tecnoacquisti.com</a>. <a href="https://help.tecnoacquisti.com/">Help center</a>.</p>
+
+</main>
+</body>
+</html>

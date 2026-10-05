@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>halloweenbats - Changelog</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>Changelog</h1>
+<h2>[1.0.3] - 2026-10-05</h2>
+<h3>Documentation and packaging</h3>
+<ul>
+<li>Add security reporting instructions, third-party notices, and a CRA readiness note.</li>
+<li>Inventory bundled assets, CMS dependencies, and the optional jQuery CDN dependency in a CycloneDX 1.5 SBOM held in the internal archive pending a repository visibility decision.</li>
+<li>Normalize <code>Readme.md</code> to <code>README.md</code>, document configuration and external requests, and generate HTML documentation.</li>
+<li>Align module-owned PHP/template headers with the owner-confirmed MIT license and correct root license transcription errors. Preserve third-party notices and include the AFL-3.0 text referenced by legacy PrestaShop source headers.</li>
+<li>Extend release exclusions for runtime configuration, source artwork, SBOM, and internal evidence; correct Apache access protection.</li>
+</ul>
+<ul>
+<li>Apply short PHP array syntax, align directory guard comments, and protect documentation/license directories.</li>
+</ul>
+<h2>[1.0.2] - Release date unknown</h2>
+<p>Version observed in the module constructor and local <code>config.xml</code>. The supplied README also names 1.0.2. The initial source review had no local Git history or historical distribution ZIP; the PHP header originally named 1.0.0. Existing GitHub history and tag v1.0.2 were recovered during release preparation. The historical distribution date and package bytes remain unverified.</p>
+
+</main>
+</body>
+</html>

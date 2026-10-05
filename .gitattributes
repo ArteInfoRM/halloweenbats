@@ -28,3 +28,14 @@
 /Makefile export-ignore
 /config.xml export-ignore
 /config_it.xml  export-ignore
+
+# CRA inventory and release-only exclusions
+config*.xml export-ignore
+/sbom.cdx.json export-ignore
+/AGENTS.md export-ignore
+/CLAUDE.md export-ignore
+/.ai export-ignore
+/dist export-ignore
+/compliance-internal export-ignore
+/.keep export-ignore
+/views/img/bats.psd export-ignore

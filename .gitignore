@@ -26,3 +26,7 @@ Thumbs.db
 /config/xml/
 /translations/cldr/datas/
 /themes/*/cache/
+# Local release and confidential evidence
+/dist/
+/compliance-internal/
+/config*.xml

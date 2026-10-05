@@ -1,13 +1,13 @@
 {*
 **
-*  2009-2025 Arte e Informatica
+*  2009-2026 Arte e Informatica
 *
 *  For support feel free to contact us on our website at https://www.arteinformatica.eu
 *
 *  @author    Arte e Informatica <admin@arteinformatica.eu>
-*  @copyright 2009-2025 Arte e Informatica
+*  @copyright 2009-2026 Arte e Informatica
 *  @version   2.1
-*  @license   One Paid Licence By WebSite Using This Module. No Rent. No Sell. No Share.
+*  @license   https://opensource.org/licenses/MIT MIT License; see LICENSE
 *
 *}
 
@@ -24,5 +24,4 @@ $(document).ready(function(){
 	});
 });
 </script>
-{/literal}	
-
+{/literal}

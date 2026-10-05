@@ -1,13 +1,13 @@
 <?php
 /**
- * 2009-2025 Tecnoacquisti.com
+ * 2009-2026 Tecnoacquisti.com
  *
  * For support feel free to contact us on our website at http://www.tecnoacquisti.com
  *
  * @author    Arte e Informatica <helpdesk@tecnoacquisti.com>
- * @copyright 2009-2025 Arte e Informatica
- * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * @version   1.0.0
+ * @copyright 2009-2026 Arte e Informatica
+ * @license   https://opensource.org/licenses/MIT MIT License; see LICENSE
+ * @version   1.0.3
  */
 
 if (!defined('_PS_VERSION_')) {
@@ -22,7 +22,7 @@ class halloweenbats extends Module
     {
         $this->name = 'halloweenbats';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
 
@@ -36,7 +36,7 @@ class halloweenbats extends Module
         $this->displayName = $this->l('Art Halloween Bats');
         $this->description = $this->l('For Halloween add a pleasing flock of bats that flutter on the pages of your ecommerce site.');
 
-        $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+        $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
     }
 
     /**
@@ -66,44 +66,44 @@ class halloweenbats extends Module
      */
     public function getContent()
     {
-		
+
 		$output = null;
-		$this->_errors = array();
+		$this->_errors = [];
         $useSsl = (bool)Configuration::get('PS_SSL_ENABLED_EVERYWHERE') || (bool)Configuration::get('PS_SSL_ENABLED');
         $shop_base_url = $this->context->link->getBaseLink((int)$this->context->shop->id, $useSsl);
-        
+
         if (((bool)Tools::isSubmit('submitHalloweenBats')) == true) {
-			
+
 			$halloween_jquery = Tools::getValue('HALLOWEEN_JQUERY');
             $halloween_amount = Tools::getValue('HALLOWEEN_AMOUNT');
 			$halloween_speed = Tools::getValue('HALLOWEEN_SPEED');
-			
+
 			if (!is_numeric($halloween_amount) || $halloween_amount <= 0) {
 				$this->_errors[] = '['.$halloween_amount.'] '.$this->l('it is not a valid number for Bats amount');
 			} elseif (!is_numeric($halloween_speed) || $halloween_speed <= 0) {
 				$this->_errors[] = '['.$halloween_speed.'] '.$this->l('it is not a valid number for Bats speed');
 			}
-			
-			if (!count($this->_errors)){		
+
+			if (!count($this->_errors)){
 			Configuration::updateValue('HALLOWEEN_JQUERY', (int)$halloween_jquery);
 			Configuration::updateValue('HALLOWEEN_AMOUNT', (int)$halloween_amount);
 			Configuration::updateValue('HALLOWEEN_SPEED', (int)$halloween_speed);
-						
+
 			$this->_clearCache('halloween_bats.tpl');
 		    $output .= $this->displayConfirmation($this->l('Settings updated'));
 			} else {
-				
+
 			foreach ($this->_errors as $error)
 					$errors = $error.' '.$this->l('Settings failed');
-				$output .= $this->displayError($errors);	
+				$output .= $this->displayError($errors);
 			}
-		
-		
+
+
 		}
 
-        $this->context->smarty->assign(array(
+        $this->context->smarty->assign([
             'shop_base_url' => $shop_base_url,
-        ));
+        ]);
 
         $output .= $this->renderForm();
         $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/copyright.tpl');
@@ -129,13 +129,13 @@ class halloweenbats extends Module
             .'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
 
-        $helper->tpl_vars = array(
+        $helper->tpl_vars = [
             'fields_value' => $this->getConfigFormValues(), /* Add values for your inputs */
             'languages' => $this->context->controller->getLanguages(),
             'id_language' => $this->context->language->id,
-        );
+        ];
 
-        return $helper->generateForm(array($this->getConfigForm()));
+        return $helper->generateForm([$this->getConfigForm()]);
     }
 
     /**
@@ -143,55 +143,55 @@ class halloweenbats extends Module
      */
     protected function getConfigForm()
     {
-        return array(
-            'form' => array(
-                'legend' => array(
+        return [
+            'form' => [
+                'legend' => [
                 'title' => $this->l('Settings'),
                 'icon' => 'icon-cogs',
-                ),
-                'input' => array(
-                    array(
+                ],
+                'input' => [
+                    [
                         'type' => 'switch',
                         'label' => $this->l('Load jQUERY'),
                         'name' => 'HALLOWEEN_JQUERY',
                         'is_bool' => true,
                         'desc' => $this->l('If your theme does not load jQUERY'),
-                        'values' => array(
-                            array(
+                        'values' => [
+                            [
                                 'id' => 'active_on',
                                 'value' => true,
                                 'label' => $this->l('Enabled')
-                            ),
-                            array(
+                            ],
+                            [
                                 'id' => 'active_off',
                                 'value' => false,
                                 'label' => $this->l('Disabled')
-                            )
-                        ),
-                    ),
-					array(
+                            ]
+                        ],
+                    ],
+					[
 						'col' => 2,
                         'type' => 'text',
                         'label' => $this->l('Bat amount'),
                         'name' => 'HALLOWEEN_AMOUNT',
                         'autoload_rte' => true,
                         'desc' => $this->l('Number of bats to show (default 5)'),
-                    ),
-					array(
+                    ],
+					[
 						'col' => 2,
                         'type' => 'text',
                         'label' => $this->l('Speed'),
                         'name' => 'HALLOWEEN_SPEED',
                         'autoload_rte' => true,
                         'desc' => $this->l('Higher value = faster (default 20)'),
-                    ),
-                    
-                ),
-                'submit' => array(
+                    ],
+
+                ],
+                'submit' => [
                     'title' => $this->l('Save'),
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     /**
@@ -199,14 +199,14 @@ class halloweenbats extends Module
      */
     protected function getConfigFormValues()
     {
-        return array(
+        return [
 			'HALLOWEEN_JQUERY' => Tools::getValue('HALLOWEEN_JQUERY', Configuration::get('HALLOWEEN_JQUERY')),
 			'HALLOWEEN_AMOUNT' => Tools::getValue('HALLOWEEN_AMOUNT', Configuration::get('HALLOWEEN_AMOUNT')),
 			'HALLOWEEN_SPEED' => Tools::getValue('HALLOWEEN_SPEED', Configuration::get('HALLOWEEN_SPEED')),
-        );
+        ];
     }
 
-   
+
 
     public function hookDisplayHeader()
     {
@@ -215,27 +215,27 @@ class halloweenbats extends Module
 		$this->context->controller->addJS($this->_path.'/views/js/halloween-bats.js');
         $this->context->controller->addCSS($this->_path.'/views/css/halloween-bats.css');
 		$bats_url = $arturi.'modules/halloweenbats/views/img/bats.png';
-		
+
 		$hw_jquery = (int)Configuration::get('HALLOWEEN_JQUERY');
 		$bats_amount = (int)Configuration::get('HALLOWEEN_AMOUNT');
 		$bats_speed = (int)Configuration::get('HALLOWEEN_SPEED');
-				
+
 		if ($bats_amount <= 0) {
 			$bats_amount = 5;
 		}
-	
+
 		if ($bats_speed <= 0) {
 			$bats_speed = 20;
 		}
-		
-		$this->smarty->assign(array(
+
+		$this->smarty->assign([
 				'bats_url' => $bats_url,
 				'bats_amount' => $bats_amount,
 				'bats_speed' => $bats_speed,
 				'hw_jquery' => $hw_jquery,
 				'arturi' => $arturi,
-		));
-		
+		]);
+
 		return $this->display(__FILE__, 'halloween_bats.tpl');
     }
 }
