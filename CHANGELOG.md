@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0] - 2026-10-05
+
+### Added
+
+- Add a selectable Vanilla JavaScript animation engine without a jQuery dependency; preserve jQuery for existing installations.
+- Load only the selected engine, defer initialization until the DOM is ready, and pass configuration through escaped data attributes.
+- Validate engine, jQuery switch, bat count and speed server-side; constrain numeric settings to 1-100 and add matching form controls.
+- Translate the engine selector and validation messages in all eight catalogs.
+
+### Translations
+
+- Complete the empty Italian catalog and add English, Spanish, French, German, Polish, European Portuguese, and Romanian catalogs for module and credit strings.
+- Localize the vendor link title and normalize whitespace in credit translation sources.
+
+### Fixed
+
+- Add the missing author and copyright tags before the MIT license tag in the documentation and license directory guards, as required by the PrestaShop validator.
+
 ## [1.0.3] - 2026-10-05
 
 ### Documentation and packaging

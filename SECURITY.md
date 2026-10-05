@@ -10,7 +10,7 @@ If access credentials are necessary, follow our [secure credential submission in
 
 ## Release and support information
 
-The source reviewed is version 1.0.3. Existing documentation lists PrestaShop 1.7.0 through 9.0; PHP must be compatible with the installed PrestaShop release. The module metadata differs from that documentation; see [README.md](README.md).
+The source reviewed is version 1.1.0. Existing documentation lists PrestaShop 1.7.0 through 9.0; PHP must be compatible with the installed PrestaShop release. The module metadata differs from that documentation; see [README.md](README.md).
 
 A maintained release line and security support end date have not yet been approved for this module. This policy establishes a reporting contact, not a support commitment for every historical version. Contact us for the terms applicable to your distribution before relying on a support period.
 

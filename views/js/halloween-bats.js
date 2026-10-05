@@ -24,6 +24,10 @@
  * to avoid any conflicts with others containers.
  */
 
+function registerHalloweenJQuery() {
+    if (!window.jQuery) {
+        return;
+    }
 (function ($) {
 	"use strict";
 
@@ -156,6 +160,7 @@
 				left: x + 'px',
 				top: y + 'px',
 				zIndex: options.zIndex,
+                    pointerEvents: 'none',
 				width: options.width + 'px',
 				height: options.height + 'px',
 				backgroundImage: 'url(' + options.image + ')',
@@ -175,4 +180,11 @@
 			innerHeight = $body.innerHeight();
 		});
 	};
-}(jQuery));
+}(window.jQuery));
+
+}
+if (document.readyState === 'complete') {
+    registerHalloweenJQuery();
+} else {
+    document.addEventListener('DOMContentLoaded', registerHalloweenJQuery);
+}

@@ -7,7 +7,7 @@
  * @author    Arte e Informatica <helpdesk@tecnoacquisti.com>
  * @copyright 2009-2026 Arte e Informatica
  * @license   https://opensource.org/licenses/MIT MIT License; see LICENSE
- * @version   1.0.3
+ * @version   1.1.0
  */
 
 if (!defined('_PS_VERSION_')) {
@@ -22,7 +22,7 @@ class halloweenbats extends Module
     {
         $this->name = 'halloweenbats';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.3';
+        $this->version = '1.1.0';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
 
@@ -47,7 +47,8 @@ class halloweenbats extends Module
     {
 
         return parent::install() &&
-		Configuration::updateValue('HALLOWEEN_JQUERY', 0) &&
+		Configuration::updateValue('HALLOWEEN_ENGINE', 'vanilla') &&
+        Configuration::updateValue('HALLOWEEN_JQUERY', 0) &&
 		Configuration::updateValue('HALLOWEEN_AMOUNT', 5) &&
 		Configuration::updateValue('HALLOWEEN_SPEED', 20) &&
         $this->registerHook('displayHeader');
@@ -55,7 +56,8 @@ class halloweenbats extends Module
 
     public function uninstall()
     {
-        return Configuration::deleteByName('HALLOWEEN_JQUERY') &&
+        return Configuration::deleteByName('HALLOWEEN_ENGINE') &&
+        Configuration::deleteByName('HALLOWEEN_JQUERY') &&
 		Configuration::deleteByName('HALLOWEEN_AMOUNT') &&
 		Configuration::deleteByName('HALLOWEEN_SPEED') &&
         parent::uninstall();
@@ -72,39 +74,43 @@ class halloweenbats extends Module
         $useSsl = (bool)Configuration::get('PS_SSL_ENABLED_EVERYWHERE') || (bool)Configuration::get('PS_SSL_ENABLED');
         $shop_base_url = $this->context->link->getBaseLink((int)$this->context->shop->id, $useSsl);
 
-        if (((bool)Tools::isSubmit('submitHalloweenBats')) == true) {
-
-			$halloween_jquery = Tools::getValue('HALLOWEEN_JQUERY');
-            $halloween_amount = Tools::getValue('HALLOWEEN_AMOUNT');
-			$halloween_speed = Tools::getValue('HALLOWEEN_SPEED');
-
-			if (!is_numeric($halloween_amount) || $halloween_amount <= 0) {
-				$this->_errors[] = '['.$halloween_amount.'] '.$this->l('it is not a valid number for Bats amount');
-			} elseif (!is_numeric($halloween_speed) || $halloween_speed <= 0) {
-				$this->_errors[] = '['.$halloween_speed.'] '.$this->l('it is not a valid number for Bats speed');
-			}
-
-			if (!count($this->_errors)){
-			Configuration::updateValue('HALLOWEEN_JQUERY', (int)$halloween_jquery);
-			Configuration::updateValue('HALLOWEEN_AMOUNT', (int)$halloween_amount);
-			Configuration::updateValue('HALLOWEEN_SPEED', (int)$halloween_speed);
-
-			$this->_clearCache('halloween_bats.tpl');
-		    $output .= $this->displayConfirmation($this->l('Settings updated'));
-			} else {
-
-			foreach ($this->_errors as $error)
-					$errors = $error.' '.$this->l('Settings failed');
-				$output .= $this->displayError($errors);
-			}
-
-
-		}
+        if (Tools::isSubmit('submitHalloweenBats')) {
+            $engine = Tools::getValue('HALLOWEEN_ENGINE');
+            $jquery = Tools::getValue('HALLOWEEN_JQUERY');
+            $amount = Tools::getValue('HALLOWEEN_AMOUNT');
+            $speed = Tools::getValue('HALLOWEEN_SPEED');
+            if (!in_array($engine, ['vanilla', 'jquery'], true)) {
+                $this->_errors[] = $this->l('Select a valid animation engine.');
+            }
+            if (!in_array($jquery, ['0', '1', 0, 1], true)) {
+                $this->_errors[] = $this->l('Select a valid jQuery loading option.');
+            }
+            if (!$this->isValidAnimationNumber($amount)) {
+                $this->_errors[] = $this->l('Bat amount must be a whole number between 1 and 100.');
+            }
+            if (!$this->isValidAnimationNumber($speed)) {
+                $this->_errors[] = $this->l('Speed must be a whole number between 1 and 100.');
+            }
+            if (!$this->_errors) {
+                $saved = Configuration::updateValue('HALLOWEEN_ENGINE', $engine)
+                    && Configuration::updateValue('HALLOWEEN_JQUERY', (int) $jquery)
+                    && Configuration::updateValue('HALLOWEEN_AMOUNT', (int) $amount)
+                    && Configuration::updateValue('HALLOWEEN_SPEED', (int) $speed);
+                $output .= $saved
+                    ? $this->displayConfirmation($this->l('Settings updated'))
+                    : $this->displayError($this->l('Settings failed'));
+            } else {
+                foreach ($this->_errors as $error) {
+                    $output .= $this->displayError($error);
+                }
+            }
+        }
 
         $this->context->smarty->assign([
             'shop_base_url' => $shop_base_url,
         ]);
 
+        $this->context->controller->addJS($this->_path . 'views/js/admin.js');
         $output .= $this->renderForm();
         $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/copyright.tpl');
         return $output;
@@ -151,11 +157,25 @@ class halloweenbats extends Module
                 ],
                 'input' => [
                     [
+                        'type' => 'select',
+                        'label' => $this->l('Animation engine'),
+                        'name' => 'HALLOWEEN_ENGINE',
+                        'options' => [
+                            'query' => [
+                                ['id' => 'vanilla', 'name' => $this->l('Vanilla JavaScript')],
+                                ['id' => 'jquery', 'name' => $this->l('jQuery')],
+                            ],
+                            'id' => 'id',
+                            'name' => 'name',
+                        ],
+                        'desc' => $this->l('Vanilla works without jQuery. Existing installations keep jQuery until changed.'),
+                    ],
+                    [
                         'type' => 'switch',
                         'label' => $this->l('Load jQUERY'),
                         'name' => 'HALLOWEEN_JQUERY',
                         'is_bool' => true,
-                        'desc' => $this->l('If your theme does not load jQUERY'),
+                        'desc' => $this->l('Only used with the jQuery engine when the theme does not provide jQuery.'),
                         'values' => [
                             [
                                 'id' => 'active_on',
@@ -174,16 +194,18 @@ class halloweenbats extends Module
                         'type' => 'text',
                         'label' => $this->l('Bat amount'),
                         'name' => 'HALLOWEEN_AMOUNT',
-                        'autoload_rte' => true,
-                        'desc' => $this->l('Number of bats to show (default 5)'),
+                        'maxlength' => 3,
+                        'class' => 'halloween-number',
+                        'desc' => $this->l('Number of bats: 1 to 100 (default 5).'),
                     ],
 					[
 						'col' => 2,
                         'type' => 'text',
                         'label' => $this->l('Speed'),
                         'name' => 'HALLOWEEN_SPEED',
-                        'autoload_rte' => true,
-                        'desc' => $this->l('Higher value = faster (default 20)'),
+                        'maxlength' => 3,
+                        'class' => 'halloween-number',
+                        'desc' => $this->l('Speed: 1 to 100; higher is faster (default 20).'),
                     ],
 
                 ],
@@ -199,43 +221,75 @@ class halloweenbats extends Module
      */
     protected function getConfigFormValues()
     {
-        return [
-			'HALLOWEEN_JQUERY' => Tools::getValue('HALLOWEEN_JQUERY', Configuration::get('HALLOWEEN_JQUERY')),
-			'HALLOWEEN_AMOUNT' => Tools::getValue('HALLOWEEN_AMOUNT', Configuration::get('HALLOWEEN_AMOUNT')),
-			'HALLOWEEN_SPEED' => Tools::getValue('HALLOWEEN_SPEED', Configuration::get('HALLOWEEN_SPEED')),
+        $values = [
+            'HALLOWEEN_ENGINE' => $this->getAnimationEngine(),
+            'HALLOWEEN_JQUERY' => (int) Configuration::get('HALLOWEEN_JQUERY') === 1 ? 1 : 0,
+            'HALLOWEEN_AMOUNT' => $this->getAnimationNumber('HALLOWEEN_AMOUNT', 5),
+            'HALLOWEEN_SPEED' => $this->getAnimationNumber('HALLOWEEN_SPEED', 20),
         ];
+        foreach ($values as $key => $fallback) {
+            $submitted = Tools::getValue($key, $fallback);
+            if (is_string($submitted) || is_int($submitted)) {
+                $values[$key] = substr((string) $submitted, 0, 100);
+            }
+        }
+
+        return $values;
     }
 
+    /**
+     * Preserve the historical engine when no engine has been configured.
+     *
+     * @return string
+     */
+    protected function getAnimationEngine()
+    {
+        return Configuration::get('HALLOWEEN_ENGINE') === 'vanilla' ? 'vanilla' : 'jquery';
+    }
 
+    /**
+     * Validate bounded decimal input before persistence and rendering.
+     *
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function isValidAnimationNumber($value)
+    {
+        return (is_string($value) || is_int($value))
+            && preg_match('/^[0-9]{1,3}$/D', (string) $value)
+            && (int) $value >= 1 && (int) $value <= 100;
+    }
 
+    /**
+     * @param string $key
+     * @param int $fallback
+     *
+     * @return int
+     */
+    protected function getAnimationNumber($key, $fallback)
+    {
+        $value = Configuration::get($key);
+
+        return $this->isValidAnimationNumber($value) ? (int) $value : $fallback;
+    }
+
+    /**
+     * Render only the selected engine and its minimal configuration.
+     *
+     * @return string
+     */
     public function hookDisplayHeader()
     {
+        $engine = $this->getAnimationEngine();
+        $this->context->smarty->assign([
+            'bats_engine' => $engine,
+            'bats_module_path' => $this->_path,
+            'bats_amount' => $this->getAnimationNumber('HALLOWEEN_AMOUNT', 5),
+            'bats_speed' => $this->getAnimationNumber('HALLOWEEN_SPEED', 20),
+            'hw_jquery' => $engine === 'jquery' && (int) Configuration::get('HALLOWEEN_JQUERY') === 1,
+        ]);
 
-		$arturi = Tools::getHttpHost(true).__PS_BASE_URI__;
-		$this->context->controller->addJS($this->_path.'/views/js/halloween-bats.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/halloween-bats.css');
-		$bats_url = $arturi.'modules/halloweenbats/views/img/bats.png';
-
-		$hw_jquery = (int)Configuration::get('HALLOWEEN_JQUERY');
-		$bats_amount = (int)Configuration::get('HALLOWEEN_AMOUNT');
-		$bats_speed = (int)Configuration::get('HALLOWEEN_SPEED');
-
-		if ($bats_amount <= 0) {
-			$bats_amount = 5;
-		}
-
-		if ($bats_speed <= 0) {
-			$bats_speed = 20;
-		}
-
-		$this->smarty->assign([
-				'bats_url' => $bats_url,
-				'bats_amount' => $bats_amount,
-				'bats_speed' => $bats_speed,
-				'hw_jquery' => $hw_jquery,
-				'arturi' => $arturi,
-		]);
-
-		return $this->display(__FILE__, 'halloween_bats.tpl');
+        return $this->display(__FILE__, 'views/templates/hook/halloween_bats.tpl');
     }
 }

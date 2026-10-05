@@ -11,17 +11,17 @@
 *
 *}
 
-{if $hw_jquery == 1}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{if $hw_jquery}
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {/if}
-{literal}
-<script type="text/javascript">
-$(document).ready(function(){
-	$.fn.halloweenBats({
-		image: '{/literal}{$bats_url|escape:'htmlall':'UTF-8'}{literal}', // Path to the image.
-		amount: {/literal}{$bats_amount|escape:'htmlall':'UTF-8'}{literal}, // Bat amount.
-		speed: {/literal}{$bats_speed|escape:'htmlall':'UTF-8'}{literal}, // Higher value = faster.
-	});
-});
-</script>
-{/literal}
+{if $bats_engine == 'vanilla'}
+  <script defer src="{$bats_module_path|escape:'html':'UTF-8'}views/js/vanilla-bats.js"></script>
+{else}
+  <script defer src="{$bats_module_path|escape:'html':'UTF-8'}views/js/halloween-bats.js"></script>
+{/if}
+<script defer id="halloween-bats-config"
+        src="{$bats_module_path|escape:'html':'UTF-8'}views/js/init.js"
+        data-engine="{$bats_engine|escape:'html':'UTF-8'}"
+        data-image="{$bats_module_path|escape:'html':'UTF-8'}views/img/bats.png"
+        data-amount="{$bats_amount|intval}"
+        data-speed="{$bats_speed|intval}"></script>

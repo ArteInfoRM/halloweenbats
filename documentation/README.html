@@ -114,19 +114,20 @@
 <main>
     <div class="generated-note">Generated from the Markdown source included with the module.</div>
 <h1>Art Halloween Bats</h1>
-<p>Art Halloween Bats (<code>halloweenbats</code>) by Tecnoacquisti.com® adds animated bats to PrestaShop storefront pages. The source currently identifies itself as version 1.0.3.</p>
+<p>Art Halloween Bats (<code>halloweenbats</code>) by Tecnoacquisti.com® adds animated bats to PrestaShop storefront pages. The source currently identifies itself as version 1.1.0.</p>
 <h2>Compatibility</h2>
 <p>The existing documented compatibility is PrestaShop 1.7.0 through 9.0. The PHP module metadata separately declares a minimum of 1.6 and a maximum equal to the installed PrestaShop version. These declarations have not been changed or reconciled during the documentation review. No compatibility tests were performed in this review. Use a PHP version supported by your installed PrestaShop release; a separate module PHP minimum is not declared.</p>
 <h2>Installation and configuration</h2>
 <p>Install the module through the PrestaShop Module Manager and open Configure. The module registers <code>displayHeader</code>; it does not install overrides or custom database tables.</p>
 <ul>
-<li><strong>Load jQUERY:</strong> disabled by default. When enabled, the browser loads jQuery 3.6.0 from Google Hosted Libraries. Leave it disabled when the theme already supplies a compatible jQuery instance. Verify script ordering and theme compatibility in a staging shop.</li>
-<li><strong>Bat amount:</strong> default 5. Keep the number low; each bat creates two animation timers and consumes browser resources.</li>
-<li><strong>Speed:</strong> default 20. Higher values increase movement speed.</li>
+<li><strong>Animation engine:</strong> choose Vanilla JavaScript or jQuery. New installations default to Vanilla. Existing installations without an engine setting continue to use jQuery until changed. Vanilla uses a single animation loop and does not load jQuery or the Google CDN.</li>
+<li><strong>Load jQUERY:</strong> disabled by default. Only with the jQuery engine, when enabled, the browser loads jQuery 3.6.0 from Google Hosted Libraries. Leave it disabled when the theme already supplies a compatible jQuery instance. Verify script ordering and theme compatibility in a staging shop.</li>
+<li><strong>Bat amount:</strong> 1 to 100, default 5. Keep the number low to limit browser work.</li>
+<li><strong>Speed:</strong> 1 to 100, default 20. Higher values increase movement speed.</li>
 </ul>
-<p>Configuration is stored in <code>HALLOWEEN_JQUERY</code>, <code>HALLOWEEN_AMOUNT</code>, and <code>HALLOWEEN_SPEED</code> through PrestaShop Configuration. Check the selected shop context in multistore installations. Disabling the module stops its storefront hook; uninstalling deletes these configuration keys.</p>
+<p>Configuration is stored in <code>HALLOWEEN_ENGINE</code>, <code>HALLOWEEN_JQUERY</code>, <code>HALLOWEEN_AMOUNT</code>, and <code>HALLOWEEN_SPEED</code> through PrestaShop Configuration. Check the selected shop context in multistore installations. Disabling the module stops its storefront hook; uninstalling deletes these configuration keys.</p>
 <h2>Data and external requests</h2>
-<p>The module does not implement customer tracking, customer records, custom logs, or server-side API calls. When the optional Google CDN setting is enabled, visitors&#039; browsers contact Google to download jQuery and transmit normal HTTP connection metadata. JavaScript, CSS, and bat images are otherwise served by the shop. Administrative credits contain links to the vendor website.</p>
+<p>The module does not implement customer tracking, customer records, custom logs, or server-side API calls. When the jQuery engine and optional Google CDN setting are enabled, visitors&#039; browsers contact Google to download jQuery and transmit normal HTTP connection metadata. JavaScript, CSS, and bat images are otherwise served by the shop. Administrative credits contain links to the vendor website.</p>
 <h2>Updates and recovery</h2>
 <p>Back up shop files and the database before installing an update, and test it on a staging copy first. Obtain a compatible package through the original module delivery channel. If animation causes display or performance problems, disable the module from Module Manager. A source-directory review is not an installation or upgrade test of a release ZIP.</p>
 <h2>Security and notices</h2>

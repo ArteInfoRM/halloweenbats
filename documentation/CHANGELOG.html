@@ -114,6 +114,23 @@
 <main>
     <div class="generated-note">Generated from the Markdown source included with the module.</div>
 <h1>Changelog</h1>
+<h2>[1.1.0] - 2026-10-05</h2>
+<h3>Added</h3>
+<ul>
+<li>Add a selectable Vanilla JavaScript animation engine without a jQuery dependency; preserve jQuery for existing installations.</li>
+<li>Load only the selected engine, defer initialization until the DOM is ready, and pass configuration through escaped data attributes.</li>
+<li>Validate engine, jQuery switch, bat count and speed server-side; constrain numeric settings to 1-100 and add matching form controls.</li>
+<li>Translate the engine selector and validation messages in all eight catalogs.</li>
+</ul>
+<h3>Translations</h3>
+<ul>
+<li>Complete the empty Italian catalog and add English, Spanish, French, German, Polish, European Portuguese, and Romanian catalogs for module and credit strings.</li>
+<li>Localize the vendor link title and normalize whitespace in credit translation sources.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Add the missing author and copyright tags before the MIT license tag in the documentation and license directory guards, as required by the PrestaShop validator.</li>
+</ul>
 <h2>[1.0.3] - 2026-10-05</h2>
 <h3>Documentation and packaging</h3>
 <ul>

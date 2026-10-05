@@ -1,6 +1,6 @@
 # Art Halloween Bats
 
-Art Halloween Bats (`halloweenbats`) by Tecnoacquisti.com® adds animated bats to PrestaShop storefront pages. The source currently identifies itself as version 1.0.3.
+Art Halloween Bats (`halloweenbats`) by Tecnoacquisti.com® adds animated bats to PrestaShop storefront pages. The source currently identifies itself as version 1.1.0.
 
 ## Compatibility
 
@@ -10,15 +10,16 @@ The existing documented compatibility is PrestaShop 1.7.0 through 9.0. The PHP m
 
 Install the module through the PrestaShop Module Manager and open Configure. The module registers `displayHeader`; it does not install overrides or custom database tables.
 
-- **Load jQUERY:** disabled by default. When enabled, the browser loads jQuery 3.6.0 from Google Hosted Libraries. Leave it disabled when the theme already supplies a compatible jQuery instance. Verify script ordering and theme compatibility in a staging shop.
-- **Bat amount:** default 5. Keep the number low; each bat creates two animation timers and consumes browser resources.
-- **Speed:** default 20. Higher values increase movement speed.
+- **Animation engine:** choose Vanilla JavaScript or jQuery. New installations default to Vanilla. Existing installations without an engine setting continue to use jQuery until changed. Vanilla uses a single animation loop and does not load jQuery or the Google CDN.
+- **Load jQUERY:** disabled by default. Only with the jQuery engine, when enabled, the browser loads jQuery 3.6.0 from Google Hosted Libraries. Leave it disabled when the theme already supplies a compatible jQuery instance. Verify script ordering and theme compatibility in a staging shop.
+- **Bat amount:** 1 to 100, default 5. Keep the number low to limit browser work.
+- **Speed:** 1 to 100, default 20. Higher values increase movement speed.
 
-Configuration is stored in `HALLOWEEN_JQUERY`, `HALLOWEEN_AMOUNT`, and `HALLOWEEN_SPEED` through PrestaShop Configuration. Check the selected shop context in multistore installations. Disabling the module stops its storefront hook; uninstalling deletes these configuration keys.
+Configuration is stored in `HALLOWEEN_ENGINE`, `HALLOWEEN_JQUERY`, `HALLOWEEN_AMOUNT`, and `HALLOWEEN_SPEED` through PrestaShop Configuration. Check the selected shop context in multistore installations. Disabling the module stops its storefront hook; uninstalling deletes these configuration keys.
 
 ## Data and external requests
 
-The module does not implement customer tracking, customer records, custom logs, or server-side API calls. When the optional Google CDN setting is enabled, visitors' browsers contact Google to download jQuery and transmit normal HTTP connection metadata. JavaScript, CSS, and bat images are otherwise served by the shop. Administrative credits contain links to the vendor website.
+The module does not implement customer tracking, customer records, custom logs, or server-side API calls. When the jQuery engine and optional Google CDN setting are enabled, visitors' browsers contact Google to download jQuery and transmit normal HTTP connection metadata. JavaScript, CSS, and bat images are otherwise served by the shop. Administrative credits contain links to the vendor website.
 
 ## Updates and recovery
 
